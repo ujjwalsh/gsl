@@ -24,15 +24,11 @@ administration tools and much more.
 %prep
 %setup -q -n gsl-%{version}
 %build
-cd src
 make %{?_smp_mflags}
-cd ../
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
-cd src
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT/usr
-cd ..
+	DESTDIR=$RPM_BUILD_ROOT PREFIX=/usr
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig

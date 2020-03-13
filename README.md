@@ -9,9 +9,11 @@
 *  [Scope and Goals](#scope-and-goals)
 *  [Ownership and License](#ownership-and-license)
 &emsp;[Ownership and License of generated sources](#ownership-and-license-of-generated-sources)
+*  [Run with docker](#run-with-docker)
 *  [Building and installing](#building-and-installing)
 &emsp;[Building on FreeBSD 10](#building-on-freebsd-10)
 &emsp;[Building on Cygwin](#building-on-cygwin)
+&emsp;[Building on MacOS ](#building-on-macos-)
 *  [This Document](#this-document)
 
 **[Starting with GSL](#starting-with-gsl)**
@@ -112,6 +114,26 @@ The authors grant you free use of this software under the terms of the GNU Gener
 
 The copyright of the output of GSL is by default the property of the user or whomever writes the template(s).
 
+### Run with docker
+
+To run gsl from docker on your current working directory:
+
+	# Shell and Powershell
+	docker run -v ${PWD}:/gsl zeromqorg/gsl <parameters and options>
+
+	# Windows CMD
+	docker run -v %cd%:/gsl zeromqorg/gsl <parameters and options>
+
+The default build directy is `/gsl`. If you mounted it elsewhere you need the specify the `GSL_BUILD_DIR` environment variable:
+
+	docker run -v <build_dir>:/projects/myproject -e GSL_BUILD_DIR=/projects/myproject zeromqorg/gsl <parameters and options>
+
+The above commands assumes that your script files are within your build directory. If you placed your scripts in other directories specify them as follows:
+
+	docker run -v <script_dir1>:/tmp/scripts1 -v <script_dir2>:/tmp/scripts2 -v ${PWD}:/gsl -e GSL_SCRIPTS_PATH=/tmp/scripts2:/tmp/scripts2 zeromqorg/gsl <parameters and options>
+
+The scripts that runs docker inside the container will place the script directories onto the PATH so that gsl can find them.
+
 ### Building and installing
 
 Dependencies:
@@ -170,6 +192,13 @@ Download, Build and Install gcc:
     mkdir build-gcc && cd build-gcc
     ../gcc-4.9.2/configure --program-suffix=-4.9.2 --enable-languages=c,c++ --disable-bootstrap --disable-shared
     make -j4
+    make install
+
+Finally build gsl:
+
+    git clone git://github.com/zeromq/gsl
+    cd gsl/src
+    make
     make install
 
 Finally build gsl:
@@ -1306,7 +1335,7 @@ GSL uses as its line terminator the value of of the attribute `terminator` of th
 
 #### Escape Symbol
 
-GSL uses the backslash "\\" as its default escape symbol, mainly due to its POSIX / C roots. This can be very annoying in templates that have a lot of backslashes. You can override the escape symbol by changing the [gsl].escape attribute, or using the -escape:X command-line switch.
+GSL uses the backslash "\" as its default escape symbol, mainly due to its POSIX / C roots. This can be very annoying in templates that have a lot of backslashes. You can override the escape symbol by changing the [gsl].escape attribute, or using the -escape:X command-line switch.
 
 Note that this takes effect for the next script loaded, so you cannot use this in a script to modify how that script itself is processed. You can use it before e.g. including a script.
 

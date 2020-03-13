@@ -28,6 +28,26 @@ The authors grant you free use of this software under the terms of the GNU Gener
 
 The copyright of the output of GSL is by default the property of the user or whomever writes the template(s).
 
+### Run with docker
+
+To run gsl from docker on your current working directory:
+
+	# Shell and Powershell
+	docker run -v ${PWD}:/gsl zeromqorg/gsl <parameters and options>
+
+	# Windows CMD
+	docker run -v %cd%:/gsl zeromqorg/gsl <parameters and options>
+
+The default build directy is `/gsl`. If you mounted it elsewhere you need the specify the `GSL_BUILD_DIR` environment variable:
+
+	docker run -v <build_dir>:/projects/myproject -e GSL_BUILD_DIR=/projects/myproject zeromqorg/gsl <parameters and options>
+
+The above commands assumes that your script files are within your build directory. If you placed your scripts in other directories specify them as follows:
+
+	docker run -v <script_dir1>:/tmp/scripts1 -v <script_dir2>:/tmp/scripts2 -v ${PWD}:/gsl -e GSL_SCRIPTS_PATH=/tmp/scripts2:/tmp/scripts2 zeromqorg/gsl <parameters and options>
+
+The scripts that runs docker inside the container will place the script directories onto the PATH so that gsl can find them.
+
 ### Building and installing
 
 Dependencies:

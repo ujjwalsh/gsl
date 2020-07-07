@@ -1,7 +1,7 @@
-Format: 3.0 (native)
+Format: 3.0 (quilt)
 Binary: generator-scripting-language
 Source: generator-scripting-language
-Version: 4.1.5
+Version: 4.1.5-0.1
 Maintainer: GSL Developers <zeromq-dev@lists.zeromq.org>
 Architecture: any
 Standards-Version: 4.1.0

@@ -6,7 +6,9 @@ cache: ccache
 os:
 - linux
 - osx
-
+arch:
+  - amd64
+  - ppc64le
 sudo: false
 
 # Set CI_TIME=true to enable build-step profiling in Travis
